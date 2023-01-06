@@ -1,4 +1,5 @@
 FROM fedora:37
+LABEL org.opencontainers.image.source https://github.com/sethhall/zeekjs-container
 
 # Dependencies required to compile and test ZeekJS on Fedora
 RUN dnf install -y \
