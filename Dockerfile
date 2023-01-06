@@ -35,7 +35,8 @@ RUN dnf install -y \
     nodejs-devel \
     v8-devel \
     yarnpkg \
-    git
+    git \
+    git-lfs
 
 ENV PATH=/usr/local/zeek/bin:$PATH
 
