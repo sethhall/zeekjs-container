@@ -19,13 +19,13 @@ RUN dnf install -y \
     zlib-devel \
     openssl-devel
 
-ENV ZEEK_VERSION=5.0.4
+ENV ZEEK_VERSION=5.0.5
 ENV ZEEK_SHA256=d01aa72864b1128513c0b3667148e765f83cd9f0befe9a751c51f0f19a8ba280
 
 RUN mkdir /zeek && \
     curl -sSL https://download.zeek.org/zeek-${ZEEK_VERSION}.tar.gz | tar -xzC /zeek --strip-components=1 && \
     cd /zeek && \
-    ./configure --generator=Ninja --disable-python && \
+    ./configure --build-type=Release --generator=Ninja --disable-python && \
     cd build && \
     ninja -j5 install && \
     cd / && \
@@ -36,20 +36,9 @@ RUN dnf install -y \
     v8-devel \
     yarnpkg \
     git \
-    git-lfs
+    git-lfs \
+    python3-GitPython \
+    python3-semantic_version
 
 ENV PATH=/usr/local/zeek/bin:$PATH
-
-ENV ZEEKJS_VER=0.4.2
-ENV ZEEKJS_FILE=zeekjs-${ZEEKJS_VER}.tar.gz
-ENV ZEEKJS_URL=https://github.com/corelight/zeekjs/archive/refs/tags/v${ZEEKJS_VER}.tar.gz
-RUN curl -L -sSf -o ${ZEEKJS_FILE} ${ZEEKJS_URL} && \
-    tar -xzf ${ZEEKJS_FILE} && \
-    rm ${ZEEKJS_FILE} && \
-    cd zeekjs-${ZEEKJS_VER} && \
-    rm -rf build && \
-    ./configure && \
-    make && \
-    make install && \
-    cd .. && \
-    rm -rf zeekjs-${ZEEKJS_VER}
+RUN zkg install --force zeekjs zeek-af_packet-plugin
