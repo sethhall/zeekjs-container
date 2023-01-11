@@ -38,7 +38,8 @@ RUN dnf install -y \
     git \
     git-lfs \
     python3-GitPython \
-    python3-semantic_version
+    python3-semantic_version \
+    procps
 
 ENV PATH=/usr/local/zeek/bin:$PATH
 RUN zkg install --force zeekjs zeek-af_packet-plugin
